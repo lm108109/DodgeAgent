@@ -11,17 +11,28 @@ public class DodgeAgent : Agent
     public float spawnInterval = 3f;   // Time between spawning obstacles (adjust for difficulty)
     public float minObstacleSpeed = 3f;
     public float maxObstacleSpeed = 6f;
+    public Transform environmentRoot; // Assign this to the parent environment GameObject in the editor
 
     public override void OnEpisodeBegin()
     {
         // Reset agent position (adjusted to match your scene setup)
         transform.localPosition = new Vector3(0f, 0.31f, -3.46f);
 
-        // Clean up any existing obstacles from previous episodes
-        GameObject[] existingObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        foreach (GameObject obs in existingObstacles)
+        // Clean up only obstacles that are children of this environment
+        if (environmentRoot != null)
         {
-            Destroy(obs);
+            var toDestroy = new System.Collections.Generic.List<GameObject>();
+            foreach (Transform child in environmentRoot)
+            {
+                if (child.CompareTag("Obstacle"))
+                {
+                    toDestroy.Add(child.gameObject);
+                }
+            }
+            foreach (var obj in toDestroy)
+            {
+                Destroy(obj);
+            }
         }
 
         // Start spawning obstacles continuously
@@ -35,10 +46,10 @@ public class DodgeAgent : Agent
     {
         // Random X position relative to the agent's position
         float randomX = Random.Range(-maxX, maxX);
-        Vector3 spawnPos = transform.position + new Vector3(randomX, 0f, 15f);  // Offset Z to start ahead of agent (agent at Z=-3.46, so 20 units ahead)
+        Vector3 spawnPos = transform.position + new Vector3(randomX, 0f, 15f);  // Offset Z to start ahead of agent
 
-        // Instantiate the prefab
-        GameObject newObstacle = Instantiate(obstaclePrefab, spawnPos, Quaternion.identity);
+        // Instantiate the prefab as a child of the environmentRoot
+        GameObject newObstacle = Instantiate(obstaclePrefab, spawnPos, Quaternion.identity, environmentRoot);
 
         // Randomize speed for variety, but keep it slower for training
         Obstacle obsScript = newObstacle.GetComponent<Obstacle>();
