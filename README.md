@@ -4,6 +4,11 @@
 This project implements a reinforcement learning environment using **Unity ML-Agents**.  
 An agent is trained to **avoid dynamically moving obstacles** and maximize its survival time.
 
+
+
+https://github.com/user-attachments/assets/af00ca18-d131-47ff-9a8f-8114790dd914
+
+
 ---
 
 ## 🧠 Environment Description
@@ -42,3 +47,4 @@ Training is performed using the **Proximal Policy Optimization (PPO)** algorithm
 ### Run training:
 ```bash
 mlagents-learn config/turtle.yaml --run-id=runX
+```
