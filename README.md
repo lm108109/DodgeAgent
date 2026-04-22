@@ -48,3 +48,7 @@ Training is performed using the **Proximal Policy Optimization (PPO)** algorithm
 ```bash
 mlagents-learn config/turtle.yaml --run-id=runX
 ```
+
+---
+
+> <small><i>Made for Advanced Reinforcement Learning course</i></small>
