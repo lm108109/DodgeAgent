@@ -46,7 +46,7 @@ Training is performed using the **Proximal Policy Optimization (PPO)** algorithm
 
 ### Run training:
 ```bash
-mlagents-learn config/turtle.yaml --run-id=runX
+mlagents-learn config/dodge.yaml --run-id=runX
 ```
 
 ---
